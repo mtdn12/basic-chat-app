@@ -9,6 +9,17 @@ let server = http.createServer(app)
 let io = socketIO(server)
 io.on('connection', (socket) => {
   console.log('New user connect')
+
+  socket.emit('newMessage', {
+    from: 'mike@example.com',
+    text: 'Hey. What is going on, this is new message for you',
+    createdAt: Date.now()
+  })
+
+  socket.on('createMessage', (newMessage) => {
+    console.log('createMessage ' ,newMessage)
+  })
+
   socket.on('disconnect' ,() => {
     console.log('Disconnected with client')
   })
